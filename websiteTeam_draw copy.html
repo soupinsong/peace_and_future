@@ -1,0 +1,328 @@
+<!DOCTYPE HTML>
+<!--
+	Dopetrope by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="ko">
+	<head>
+		<title>send peace</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+
+		<meta charset="UTF-8">
+		<title>반응형 그리기</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js"></script>
+		<style>
+
+			body {
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+			position: relative;
+			}
+
+			/* 배경 이미지: 박스 내부에만 표시되게 */
+			#background {
+			width: 100%;
+			height: 100%;
+			background-image: url('wonpock.png');
+			background-size: contain;
+			background-position: center;
+			background-repeat: no-repeat;
+			}
+
+			/* p5.js 캔버스는 배경 위에 오도록 */
+			canvas {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 1;
+			pointer-events: none;
+			}
+
+			/* 버튼은 그 위에 */
+			button {
+			z-index: 2 !important;
+			}
+		</style>
+
+	</head>
+	<body class="no-sidebar is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<section id="header">
+
+					<!-- Logo -->
+						<h1><a href="index.html">4 peace</a></h1>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a href="index.html">Home</a></li>
+								<li><a href="introduce.html">프로그램 소개</a></li> <!--대학 소개, 목표, 워크숍 비전 등을 삽입합니다.-->
+								<li><a href="mediaTeam.html">공연 및 영상 팀</a></li>
+								<li><a href="pictureTeam.html">사진 기록 팀</a></li>
+								<li><a href="designTeam.html">디자인 팀</a></li>
+								<li class="current"><a href="websiteTeam_Intro.html">웹마스터 팀</a></li>
+								<li>
+									<a href="https://jiyoon6735.wixsite.com/20peaceandfuture25">웹자보</a>
+									<ul>
+										<li><a href="https://jiyoon6735.wixsite.com/20peaceandfuture25/%EC%9D%BC%EC%A0%95">일정</a></li>
+										<li><a href="https://jiyoon6735.wixsite.com/20peaceandfuture25/about-1">참가자 소개</a></li>
+									</ul>
+								</li>
+							</ul>
+						</nav>
+
+
+				</section>
+
+			<!-- Main -->
+				<section id="main">
+					<div class="container">
+
+						<!-- Content -->
+							<article class="box post">
+								<div id="background"></div> <!-- 제일 위에 -->
+								<header>
+									<h2>No Sidebar</h2>
+									<p>Lorem ipsum dolor sit amet feugiat</p>
+								</header>
+					
+								<script>
+								let brushColor;
+								let brushSize;
+								let shapes = [];
+								let presetColors = ['#ff2828', '#1c97ff','#eaeaea', '#2e2929'];
+								let buttons = []; // 버튼들을 저장할 배열
+								let isPen = true;
+
+								function setup() {
+								createCanvas(windowWidth, windowHeight);
+								brushColor = color(0);
+								brushSize = 2;
+								createColorButtons(); // 초기 버튼 생성
+								}
+
+								function windowResized() {
+								resizeCanvas(windowWidth, windowHeight);
+								repositionButtons(); // 창 크기 변경 시 버튼 위치 재조정
+								}
+
+								function draw() {
+								for (let s of shapes) {
+									drawShape(s);
+								}
+
+								if (mouseIsPressed && isPen) {
+									stroke(brushColor);
+									strokeWeight(brushSize);
+									line(pmouseX, pmouseY, mouseX, mouseY);
+									shapes.push({
+									type: 'draw',
+									x1: pmouseX,
+									y1: pmouseY,
+									x2: mouseX,
+									y2: mouseY,
+									color: brushColor,
+									size: brushSize
+									});
+								}
+								}
+
+								function drawShape(s) {
+								stroke(s.color);
+								strokeWeight(s.size);
+								line(s.x1, s.y1, s.x2, s.y2);
+								}
+
+								function createColorButtons() {
+								const size = getButtonSize();
+								for (let i = 0; i < presetColors.length; i++) {
+									let btn = createButton('');
+									btn.style('background-color', presetColors[i]);
+									btn.style('border-radius', '50%');
+									btn.style('border', 'none');
+									btn.style('width', size + 'px');
+									btn.style('height', size + 'px');
+									btn.mousePressed(() => brushColor = color(presetColors[i]));
+									buttons.push(btn);
+								}
+								repositionButtons();
+								}
+
+								function repositionButtons() {
+								const spacing = getSpacing();
+								const size = getButtonSize();
+								for (let i = 0; i < buttons.length; i++) {
+									buttons[i].style('width', size + 'px');
+									buttons[i].style('height', size + 'px');
+									if (i < 2) {
+									// 오른쪽 버튼
+									buttons[i].position(windowWidth - size - 30, 100 + i * spacing*5+30);
+									} else {
+									// 왼쪽 버튼
+									buttons[i].position(30, 100 + (i - 2) * spacing*5+30);
+									}
+								}
+								}
+
+								function getButtonSize() {
+								return constrain(windowWidth * 0.05, 40, 80); // 최소 40, 최대 80
+								}
+
+								function getSpacing() {
+								return constrain(windowHeight * 0.1, 60, 150);
+								}
+								</script>
+
+
+							</article>
+
+								<ul class="actions" style="display: flex; justify-content: center; gap: 1rem;">
+									<li><a href="websiteTeam_ques.html" class="button large">Last Piece</a></li>
+									<li><a href="#" class="button alt large">Download</a></li>
+								</ul>
+
+					</div>
+				</section>
+
+			<!-- Footer -->
+				<section id="footer">
+					<div class="container">
+						<div class="row">
+							<div class="col-8 col-12-medium">
+								<section>
+									<header>
+										<h2>워크숍 주요 일정</h2>
+									</header>
+									<ul class="dates">
+										<li>
+											<span class="date">Jul <strong>7</strong></span>
+											<h3><a href="#">나가사키 평화 공원</a></h3>
+											<p>한인 위령비 추모 및 피폭 체험담 청취</p>
+										</li>
+										<li>
+											<span class="date">Jul <strong>8</strong></span>
+											<h3><a href="#">나가사키(7.8)/히로시마(7.11) 특강</a></h3>
+											<p>핵과 안보, 나가사키·히로시마의 역사 및 국제 협력에 대한 집중 강의 및 증언 특강 참여</p>
+										</li>
+										<li>
+											<span class="date">Jul <strong>9</strong></span>
+											<h3><a href="#">나가사키 인권 평화 자료관</a></h3>
+											<p>강제동원과 위안부 문제, 군함도 및 다카시마 섬을 중심으로 한 인권 침해의 역사 고찰</p>
+										</li>
+										<li>
+											<span class="date">Jul <strong>10</strong></span>
+											<h3><a href="#">다카시마 섬</a></h3>
+											<p>일제강점기 강제노동의 흔적이 남아 있는 공간으로, 산업 유산 이면의 인권 침해를 조명</p>
+										</li>
+										<li>
+											<span class="date">Jul <strong>11</strong></span>
+											<h3><a href="#">히로시마 평화 기념관</a></h3>
+											<p>원자폭탄 투하의 참상을 기록, 핵 없는 평화를 위한 메시지 전달</p>
+										</li>
+										<li>
+											<span class="date">Jul <strong>13</strong></span>
+											<h3><a href="#">오사카 엑스포</a></h3>
+											<p>‘미래 사회의 실험장’으로, 지속가능성과 국제 협력을 모색하는 글로벌 전시 플랫폼</p>
+										</li>
+									</ul>
+								</section>
+							</div>
+							<div class="col-4 col-12-medium">
+								<section>
+									<header>
+										<h2>원폭 문제는 우리와도 <br><br>깊이 연결돼 있습니다.</h2>
+									</header>
+									<a href="#" class="image featured"><img src="images/pic10.jpg" alt="" /></a>
+									<p>
+										원자폭탄은 일본만의 문제가 아닙니다. 일제강점기 강제로 동원된 조선인들 역시 히로시마와 나가사키에서 큰 피해를 입었기 때문입니다. 과거의 아픈 역사를 직시하고 공유함으로써, 한일 간의 평화와 인권에 대한 연대는 더욱 깊어질 수 있습니다.
+									</p>
+									<footer>
+										<ul class="actions">
+											<li><a href="https://contents.history.go.kr/mobile/kc/view.do?levelId=kc_i400700&code=kc_age_40" class="button">Find out more</a></li>
+										</ul>
+									</footer>
+								</section>
+							</div>
+							<div class="col-4 col-6-medium col-12-small">
+								<section>
+									<header>
+										<h2>평화를 위해</h2>
+									</header>
+									<ul class="divided">
+										<li><a href="https://www.japan.travel/en/spot/742/">나가사키 평화 공원</a></li>
+										<li><a href="https://www.japan.travel/ko/world-heritage/hiroshima-peace-memorial/">히로시마 평화 기념 공원</a></li>
+										<li><a href="https://overseas.mofa.go.kr/jp-fukuoka-ko/brd/m_1606/view.do?seq=1331229&srchFr=&amp;srchTo=&amp;srchWord=&amp;srchTp=&amp;multi_itm_seq=0&amp;itm_seq_1=0&amp;itm_seq_2=0&amp;company_cd=&amp;company_nm=">나가사키 평화 자료관</a></li>
+										<li><a href="https://encykorea.aks.ac.kr/Article/E0061343">한국원폭피해자대책특별위원회</a></li>
+									</ul>
+								</section>
+							</div>
+							<div class="col-4 col-6-medium col-12-small">
+								<section>
+									<header>
+										<h2>미래를 위해</h2>
+									</header>
+									<ul class="divided">
+										<li><a href="https://www.nagasaki-u.ac.jp/kr/">나가사키 대학</a></li>
+										<li><a href="https://www.int-students-hiroshima.jp/kr/school/detail.php?UID=26">히로시마 시립 대학</a></li>
+										<li><a href="https://www.expo2025.or.jp/en/">오사카 간사이 엑스포</a></li>
+										<li><a href="https://www.cau.ac.kr/index.do">중앙대학교</a></li>
+									</ul>
+								</section>
+							</div>
+							<div class="col-4 col-12-medium">
+								<section>
+									<header>
+										<h2>Team CAU</h2>
+									</header>
+									<ul class="contact">
+										<li>
+											<h3>Address</h3>
+											<p>
+												South Korea<br />
+												서울특별시 동작구 흑석로 84<br />
+												FAX.02-812-5384
+											</p>
+										</li>
+										<li>
+											<h3>Mail</h3>
+											<p><a href="#">minlee2004@naver.com</a></p>
+										</li>
+										<li>
+											<h3>TEL</h3>
+											<p>82+ 02-820-5114~6114 </p>
+										</li>
+									</ul>
+								</section>
+							</div>
+							<div class="col-12">
+
+								<!-- Copyright -->
+									<div id="copyright">
+										<ul class="links">
+											<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+										</ul>
+									</div>
+
+							</div>
+						</div>
+					</div>
+				</section>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
